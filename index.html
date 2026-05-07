@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gun Zombie Shooter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div id="ui-layer">
+            <div id="hud">
+                <div class="top-bar">
+                    <div class="score">SCORE: <span id="score-val">0</span></div>
+                    <div class="wave">WAVE: <span id="wave-val">1</span></div>
+                </div>
+                <div class="health-bar">
+                    HEALTH: <span id="health-val">❤️❤️❤️</span>
+                </div>
+            </div>
+
+            <div id="start-screen" class="screen">
+                <div class="logo-container">
+                    <h1 class="game-title">Gun Zombie</h1>
+                    <p class="subtitle">화면을 좌우로 드래그하여<br>좀비 군단을 섬멸하세요!</p>
+                </div>
+                <button id="start-btn" class="btn-modern pulse">GAME START</button>
+            </div>
+
+            <div id="game-over-screen" class="screen hidden">
+                <h1>GAME OVER</h1>
+                <p>최종 점수: <span id="final-score">0</span></p>
+                <button id="restart-btn">다시 하기</button>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
