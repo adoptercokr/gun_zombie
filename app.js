@@ -150,9 +150,14 @@ function prepareBg() {
     bgPrepared = true;
 }
 
+// 모바일 여부 감지 (터치 디바이스)
+function isMobile() {
+    return window.innerWidth <= 768 || ('ontouchstart' in window);
+}
+
 const player = {
     x: canvas.width / 2,
-    y: canvas.height - 110,
+    y: canvas.height - 70,
     width: 170,
     height: 170,
     targetX: canvas.width / 2,
@@ -188,7 +193,9 @@ const player = {
         }
     },
     update() {
-        this.y = canvas.height - 110;
+        // 모바일에서는 더 아래쪽 (화면 끝 가깝게), PC는 약간 위
+        let bottomOffset = isMobile() ? 55 : 75;
+        this.y = canvas.height - bottomOffset;
         this.x += (this.targetX - this.x) * 0.2;
         if(this.x < this.width/2) this.x = this.width/2;
         if(this.x > canvas.width - this.width/2) this.x = canvas.width - this.width/2;
@@ -208,9 +215,13 @@ function spawnZombie() {
         let hp = isGiant ? (10 + wave * 4) : (3 + Math.floor(wave / 2));
         let speed = isGiant ? (0.2 + wave * 0.02) : (0.4 + Math.random() * 0.3 + wave * 0.04);
         
+        // 좀비가 처음부터 화면 안에 보이도록 화면 상단 근처(y: size/2 ~ size)에서 스폰
+        // 기존처럼 화면 위 (-150)에서 등장하면 총에 맞아도 안 보임
+        let spawnY = size / 2 + Math.random() * (size * 0.5);
+        
         zombies.push({
             x: Math.random() * (canvas.width - size) + size/2,
-            y: -150 - Math.random() * 80,
+            y: spawnY,
             width: size,
             height: size,
             speed: speed,
