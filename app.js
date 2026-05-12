@@ -157,7 +157,7 @@ function isMobile() {
 
 const player = {
     x: canvas.width / 2,
-    y: canvas.height - 70,
+    y: canvas.height - 135,
     width: 170,
     height: 170,
     targetX: canvas.width / 2,
@@ -193,8 +193,8 @@ const player = {
         }
     },
     update() {
-        // 모바일에서는 더 아래쪽 (화면 끝 가깝게), PC는 약간 위
-        let bottomOffset = isMobile() ? 55 : 75;
+        // 모바일과 PC 화면 비율을 9:16으로 통일했으므로 동일한 하단 오프셋(135px)을 적용하여 하단 짤림 방지
+        let bottomOffset = 135;
         this.y = canvas.height - bottomOffset;
         this.x += (this.targetX - this.x) * 0.2;
         if(this.x < this.width/2) this.x = this.width/2;
@@ -215,9 +215,8 @@ function spawnZombie() {
         let hp = isGiant ? (10 + wave * 4) : (3 + Math.floor(wave / 2));
         let speed = isGiant ? (0.2 + wave * 0.02) : (0.4 + Math.random() * 0.3 + wave * 0.04);
         
-        // 좀비가 처음부터 화면 안에 보이도록 화면 상단 근처(y: size/2 ~ size)에서 스폰
-        // 기존처럼 화면 위 (-150)에서 등장하면 총에 맞아도 안 보임
-        let spawnY = size / 2 + Math.random() * (size * 0.5);
+        // 최상단에서 출발하되, 좀비의 반 정도가 보이는 위치(y = 0 부근)에서 생성되도록 수정
+        let spawnY = -size * 0.2 + Math.random() * (size * 0.2);
         
         zombies.push({
             x: Math.random() * (canvas.width - size) + size/2,
